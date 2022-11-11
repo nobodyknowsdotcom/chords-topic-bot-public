@@ -14,8 +14,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.starter.SpringWebhookBot;
 
-import javax.websocket.MessageHandler;
-
 @Slf4j
 @Getter
 @Setter
@@ -24,6 +22,7 @@ import javax.websocket.MessageHandler;
 public class KirRealBot extends SpringWebhookBot {
 
     BotConfig botConfig;
+    MessageProcessing messageProcessing;
 
     public KirRealBot(SetWebhook setWebhook, BotConfig botConfig) {
         super(setWebhook);
@@ -40,27 +39,26 @@ public class KirRealBot extends SpringWebhookBot {
         return botConfig.getToken();
     }
 
-    private void sendMessage(String text, Long chatId){
-        SendMessage messageToSend = new SendMessage();
-        messageToSend.setChatId(chatId.toString());
-        messageToSend.setText(String.valueOf(text));
-
-        try{
-            execute(messageToSend);
-        }
-        catch (TelegramApiException e){
-            log.error(String.format("Can't send message '%s'!",text));
-        }
-    }
-
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
         if(update.hasMessage() && update.getMessage().hasText()){
             String messageText = update.getMessage().getText();
             Long chatId = update.getMessage().getChatId();
+
             sendMessage(messageText, chatId);
         }
         return null;
+    }
+
+    private void sendMessage(String text, Long chatId){
+        SendMessage message = MessageProcessing.getEchoMessage(text, chatId);
+
+        try{
+            execute(message);
+        }
+        catch (TelegramApiException e){
+            log.error(String.format("Can't send message '%s'!",text));
+        }
     }
 
     @Override
