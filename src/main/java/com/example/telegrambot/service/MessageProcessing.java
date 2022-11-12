@@ -21,15 +21,24 @@ public class MessageProcessing {
     }
 
     private static void addReplyKeyboardMarkup(SendMessage message){
+        ReplyKeyboardMarkup keyboardMarkup = getKeyboardMarkup();
+        message.setReplyMarkup(keyboardMarkup);
+    }
+
+    private static ReplyKeyboardMarkup getKeyboardMarkup(){
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
         List<KeyboardRow> keyboard = new ArrayList<>();
-        KeyboardRow row = new KeyboardRow();
+        KeyboardRow row_1 = new KeyboardRow();
+        KeyboardRow row_2 = new KeyboardRow();
 
-        row.add("Это кнопка под клавиатурой.");
-        keyboard.add(row);
+        row_1.add("Дай мне топ разборов песен на сегодня!");
+        keyboard.add(row_1);
+        row_2.add("Как пользоваться этим ботом?");
+        keyboard.add(row_2);
         keyboardMarkup.setKeyboard(keyboard);
         keyboardMarkup.setResizeKeyboard(true);
+        keyboardMarkup.setOneTimeKeyboard(false);
 
-        message.setReplyMarkup(keyboardMarkup);
+        return keyboardMarkup;
     }
 }

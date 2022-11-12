@@ -2,7 +2,6 @@ package com.example.telegrambot.service;
 
 import com.example.telegrambot.сonfiguration.BotConfig;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -18,25 +17,14 @@ import org.telegram.telegrambots.starter.SpringWebhookBot;
 @Getter
 @Setter
 @Service
-@Component
-public class KirRealBot extends SpringWebhookBot {
+public class ChordsTopicBot extends SpringWebhookBot {
 
     BotConfig botConfig;
     MessageProcessing messageProcessing;
 
-    public KirRealBot(SetWebhook setWebhook, BotConfig botConfig) {
+    public ChordsTopicBot(SetWebhook setWebhook, BotConfig botConfig) {
         super(setWebhook);
         this.botConfig = botConfig;
-    }
-
-    @Override
-    public String getBotUsername() {
-        return botConfig.getName();
-    }
-
-    @Override
-    public String getBotToken() {
-        return botConfig.getToken();
     }
 
     @Override
@@ -62,7 +50,17 @@ public class KirRealBot extends SpringWebhookBot {
     }
 
     @Override
+    public String getBotUsername() {
+        return botConfig.getName();
+    }
+
+    @Override
+    public String getBotToken() {
+        return botConfig.getToken();
+    }
+
+    @Override
     public String getBotPath() {
-        return null;
+        return botConfig.getWebhookPath();
     }
 }

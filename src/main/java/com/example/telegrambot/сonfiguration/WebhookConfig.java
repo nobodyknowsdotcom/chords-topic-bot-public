@@ -1,6 +1,6 @@
 package com.example.telegrambot.сonfiguration;
 
-import com.example.telegrambot.service.KirRealBot;
+import com.example.telegrambot.service.ChordsTopicBot;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ public class WebhookConfig {
 
     @Bean
     @Primary
-    public KirRealBot springWebhookBot(SetWebhook setWebhook, BotConfig botConfig) {
-        return new KirRealBot(setWebhook, botConfig);
+    public ChordsTopicBot springWebhookBot(SetWebhook setWebhook, BotConfig botConfig) {
+        return new ChordsTopicBot(setWebhook, botConfig);
     }
 }
