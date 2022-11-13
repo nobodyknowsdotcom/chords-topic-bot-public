@@ -9,14 +9,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class MessageProcessing {
+public class ReplyHandler {
 
-    public static SendMessage getEchoMessage(String text, Long chatId){
+    public static SendMessage handleMessage(String text, Long chatId){
         SendMessage messageToSend = new SendMessage();
         messageToSend.setChatId(chatId.toString());
-        messageToSend.setText(String.valueOf(text));
 
-        addReplyKeyboardMarkup(messageToSend);
+        switch (text){
+            case "/start":
+                messageToSend.setText("Приветик, я бот-скидыватель аккордов и текста!" +
+                        "Попроси топ аккордов и наслаждайся, надеюсь я сделал твой день чуть лучше :)");
+                addReplyKeyboardMarkup(messageToSend);
+                break;
+            case "Что делает этот бот?":
+                messageToSend.setText("Моя работа - кидать тебе самые популярные разборы песен с сайта AmDm.");
+                break;
+            case "Дай мне топ разборов песен на сегодня!":
+                messageToSend.setText("Самые популярные разборы песен на сегодня:\n*разборы песен*");
+                break;
+            default:
+                messageToSend.setText("Братик, что ты делаешь? Я не могу обработать твоё сообщение :(");
+        }
+
         return messageToSend;
     }
 
@@ -33,7 +47,7 @@ public class MessageProcessing {
 
         row_1.add("Дай мне топ разборов песен на сегодня!");
         keyboard.add(row_1);
-        row_2.add("Как пользоваться этим ботом?");
+        row_2.add("Что делает этот бот?");
         keyboard.add(row_2);
         keyboardMarkup.setKeyboard(keyboard);
         keyboardMarkup.setResizeKeyboard(true);

@@ -4,7 +4,6 @@ import com.example.telegrambot.сonfiguration.BotConfig;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -20,7 +19,7 @@ import org.telegram.telegrambots.starter.SpringWebhookBot;
 public class ChordsTopicBot extends SpringWebhookBot {
 
     BotConfig botConfig;
-    MessageProcessing messageProcessing;
+    ReplyHandler messageProcessing;
 
     public ChordsTopicBot(SetWebhook setWebhook, BotConfig botConfig) {
         super(setWebhook);
@@ -39,8 +38,7 @@ public class ChordsTopicBot extends SpringWebhookBot {
     }
 
     private void sendMessage(String text, Long chatId){
-        SendMessage message = MessageProcessing.getEchoMessage(text, chatId);
-
+        SendMessage message = ReplyHandler.handleMessage(text, chatId);
         try{
             execute(message);
         }
