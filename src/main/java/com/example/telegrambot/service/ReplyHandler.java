@@ -21,10 +21,10 @@ public class ReplyHandler {
                         "Попроси топ аккордов и наслаждайся, надеюсь я сделал твой день чуть лучше :)");
                 addReplyKeyboardMarkup(messageToSend);
                 break;
-            case "Что делает этот бот?":
+            case "Что делает этот бот? \uD83E\uDD14":
                 messageToSend.setText("Моя работа - кидать тебе самые популярные разборы песен с сайта AmDm.");
                 break;
-            case "Дай мне топ разборов песен на сегодня!":
+            case "Дай мне топ разборов песен на сегодня! \uD83C\uDFB8":
                 messageToSend.setText("Самые популярные разборы песен на сегодня:\n*разборы песен*");
                 break;
             default:
@@ -42,17 +42,17 @@ public class ReplyHandler {
     private static ReplyKeyboardMarkup getKeyboardMarkup(){
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
         List<KeyboardRow> keyboard = new ArrayList<>();
-        KeyboardRow row_1 = new KeyboardRow();
-        KeyboardRow row_2 = new KeyboardRow();
 
-        row_1.add("Дай мне топ разборов песен на сегодня!");
-        keyboard.add(row_1);
-        row_2.add("Что делает этот бот?");
-        keyboard.add(row_2);
+        KeyboardRow keyboardFirstRow = new KeyboardRow();
+        keyboardFirstRow.add("Дай мне топ разборов песен на сегодня! \uD83C\uDFB8");
+        keyboard.add(keyboardFirstRow);
+        KeyboardRow keyboardSecondRow = new KeyboardRow();
+        keyboardSecondRow.add("Что делает этот бот? \uD83E\uDD14");
+        keyboard.add(keyboardSecondRow);
+
         keyboardMarkup.setKeyboard(keyboard);
         keyboardMarkup.setResizeKeyboard(true);
         keyboardMarkup.setOneTimeKeyboard(false);
-
         return keyboardMarkup;
     }
 }
