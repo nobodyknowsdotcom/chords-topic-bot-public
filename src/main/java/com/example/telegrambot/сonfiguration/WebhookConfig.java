@@ -1,6 +1,7 @@
 package com.example.telegrambot.сonfiguration;
 
 import com.example.telegrambot.service.ChordsTopicBot;
+import com.example.telegrambot.service.ReplyHandler;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,7 @@ public class WebhookConfig {
 
     @Bean
     @Primary
-    public ChordsTopicBot springWebhookBot(SetWebhook setWebhook, BotConfig botConfig) {
-        return new ChordsTopicBot(setWebhook, botConfig);
+    public ChordsTopicBot springWebhookBot(SetWebhook setWebhook, BotConfig botConfig, ReplyHandler replyHandler) {
+        return new ChordsTopicBot(setWebhook, botConfig, replyHandler);
     }
 }

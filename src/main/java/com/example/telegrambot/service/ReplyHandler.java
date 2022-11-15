@@ -1,31 +1,46 @@
 package com.example.telegrambot.service;
 
+import com.example.telegrambot.model.Song;
+import com.example.telegrambot.service.callback.CallbackButtonSetter;
+import com.example.telegrambot.utils.ButtonsReply;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 public class ReplyHandler {
+    private final ParserService parserService;
 
-    public static SendMessage handleMessage(String text, Long chatId){
+    public ReplyHandler(ParserService parser, CallbackButtonSetter callbackButtonSetter) {
+        this.parserService = parser;
+    }
+
+    public SendMessage handleMessage(String text, Long chatId){
         SendMessage messageToSend = new SendMessage();
         messageToSend.setChatId(chatId.toString());
 
         switch (text){
             case "/start":
-                messageToSend.setText("Приветик, я бот-скидыватель аккордов и текста!" +
-                        "Попроси топ аккордов и наслаждайся, надеюсь я сделал твой день чуть лучше :)");
+                messageToSend.setText(ButtonsReply.START.getTitle());
                 addReplyKeyboardMarkup(messageToSend);
                 break;
             case "Что делает этот бот? \uD83E\uDD14":
-                messageToSend.setText("Моя работа - кидать тебе самые популярные разборы песен с сайта AmDm.");
+                messageToSend.setText(ButtonsReply.HELP.getTitle());
                 break;
             case "Дай мне топ разборов песен на сегодня! \uD83C\uDFB8":
-                messageToSend.setText("Самые популярные разборы песен на сегодня:\n*разборы песен*");
+                messageToSend.setText(ButtonsReply.TOPIC_FOR_TODAY.getTitle());
+                List<Song> songs = Arrays.stream(parserService.getSongsByApi("today"))
+                        .limit(10)
+                        .collect(Collectors.toList());
+                CallbackButtonSetter.addSongsAsButtons(messageToSend, songs);
                 break;
             default:
                 messageToSend.setText("Братик, что ты делаешь? Я не могу обработать твоё сообщение :(");

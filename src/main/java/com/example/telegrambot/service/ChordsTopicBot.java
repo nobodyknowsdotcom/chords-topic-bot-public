@@ -19,11 +19,12 @@ import org.telegram.telegrambots.starter.SpringWebhookBot;
 public class ChordsTopicBot extends SpringWebhookBot {
 
     BotConfig botConfig;
-    ReplyHandler messageProcessing;
+    ReplyHandler replyHandler;
 
-    public ChordsTopicBot(SetWebhook setWebhook, BotConfig botConfig) {
+    public ChordsTopicBot(SetWebhook setWebhook, BotConfig botConfig, ReplyHandler replyHandler) {
         super(setWebhook);
         this.botConfig = botConfig;
+        this.replyHandler = replyHandler;
     }
 
     @Override
@@ -38,12 +39,13 @@ public class ChordsTopicBot extends SpringWebhookBot {
     }
 
     private void sendMessage(String text, Long chatId){
-        SendMessage message = ReplyHandler.handleMessage(text, chatId);
+        SendMessage message = replyHandler.handleMessage(text, chatId);
         try{
             execute(message);
         }
         catch (TelegramApiException e){
             log.error(String.format("Can't send message '%s'!",text));
+            e.printStackTrace();
         }
     }
 
