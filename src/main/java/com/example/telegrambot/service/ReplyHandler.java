@@ -35,7 +35,7 @@ public class ReplyHandler {
                 keyboardButtons = ReplyKeyboardService.getKeyboardMarkup();
                 messageToSend.setReplyMarkup(keyboardButtons);
                 break;
-            case "Что делает этот бот? \uD83E\uDD14":
+            case "/help":
                 messageToSend.setText(ButtonsReply.HELP.getTitle());
                 break;
             case "Хочу топ разборов песен за сегодня \uD83E\uDD20":

@@ -6,7 +6,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum ButtonsText {
-    HELP ("Что делает этот бот? \uD83E\uDD14"),
     TOPIC_FOR_TODAY ("Хочу топ разборов песен за сегодня \uD83E\uDD20"),
     TOPIC_FOR_WEEK ("Хочу топ разборов песен за неделю ☺️"),
     TOPIC_FOR_MONTH ("Хочу топ разборов песен за месяц \uD83E\uDD78"),

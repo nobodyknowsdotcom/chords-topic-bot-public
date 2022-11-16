@@ -14,7 +14,6 @@ public class ReplyKeyboardService {
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
         List<KeyboardRow> keyboard = new ArrayList<>();
 
-        keyboard.add(getButton(ButtonsText.HELP.getTitle()));
         keyboard.add(getButton(ButtonsText.TOPIC_FOR_TODAY.getTitle()));
         keyboard.add(getButton(ButtonsText.TOPIC_FOR_WEEK.getTitle()));
         keyboard.add(getButton(ButtonsText.TOPIC_FOR_MONTH.getTitle()));
