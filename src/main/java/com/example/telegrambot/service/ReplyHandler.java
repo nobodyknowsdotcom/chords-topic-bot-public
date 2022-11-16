@@ -25,35 +25,38 @@ public class ReplyHandler {
 
     public SendMessage handleMessage(String incomingMessageText, Long chatId){
         SendMessage messageToSend = new SendMessage();
+        ReplyKeyboardMarkup keyboardButtons = new ReplyKeyboardMarkup();
         List<Song> songsList = new ArrayList<>();
         messageToSend.setChatId(chatId.toString());
 
         switch (incomingMessageText){
             case "/start":
                 messageToSend.setText(ButtonsReply.START.getTitle());
+                keyboardButtons = ReplyKeyboardService.getKeyboardMarkup();
+                messageToSend.setReplyMarkup(keyboardButtons);
                 break;
             case "Что делает этот бот? \uD83E\uDD14":
                 messageToSend.setText(ButtonsReply.HELP.getTitle());
                 break;
-            case "Получить топ разборов песен за сегодня":
+            case "Хочу топ разборов песен за сегодня \uD83E\uDD20":
                 messageToSend.setText(ButtonsReply.TOPIC_FOR_TODAY.getTitle());
                 songsList = parserService.getSongsTopic(ParserCategories.TODAY, topicSize);
                 break;
-            case "Получить топ разборов песен за неделю":
+            case "Хочу топ разборов песен за неделю ☺️":
                 messageToSend.setText(ButtonsReply.TOPIC_FOR_WEEK.getTitle());
                 songsList = parserService.getSongsTopic(ParserCategories.WEEK, topicSize);
                 break;
-            case "Получить топ разборов песен за месяц":
+            case "Хочу топ разборов песен за месяц \uD83E\uDD78":
                 messageToSend.setText(ButtonsReply.TOPIC_FOR_MONTH.getTitle());
                 songsList = parserService.getSongsTopic(ParserCategories.MONTH, topicSize);
                 break;
-            case "Получить топ разборов песен за все время":
+            case "Хочу топ разборов песен за все время \uD83E\uDD79":
                 messageToSend.setText(ButtonsReply.TOPIC_FOR_ALL_TIME.getTitle());
                 songsList = parserService.getSongsTopic(ParserCategories.ALL, topicSize);
                 break;
             default:
                 messageToSend.setText("Братик, что ты делаешь? Я не могу обработать твоё сообщение :(");
-                ReplyKeyboardMarkup keyboardButtons = ReplyKeyboardService.getKeyboardMarkup();
+                keyboardButtons = ReplyKeyboardService.getKeyboardMarkup();
                 messageToSend.setReplyMarkup(keyboardButtons);
         }
 
