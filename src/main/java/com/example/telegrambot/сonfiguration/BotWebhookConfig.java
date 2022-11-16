@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.api.methods.updates.SetWebhook;
 
 @Configuration
 @AllArgsConstructor
-public class WebhookConfig {
+public class BotWebhookConfig {
     private final BotConfig telegramConfig;
 
     @Bean

@@ -1,4 +1,4 @@
-package com.example.telegrambot.service.callback;
+package com.example.telegrambot.service;
 
 import com.example.telegrambot.model.Song;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class CallbackButtonSetter {
+public class CallbackButtonService {
     public static void addSongsAsButtons(SendMessage message, List<Song> songs){
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
@@ -28,7 +28,7 @@ public class CallbackButtonSetter {
         InlineKeyboardButton songButton = new InlineKeyboardButton();
 
         songButton.setText(song.toString());
-        songButton.setCallbackData("song_id");
+        songButton.setUrl(song.getUrl());
         rowInline.add(songButton);
         return rowInline;
     }

@@ -1,8 +1,6 @@
 package com.example.telegrambot.service;
 
 import com.example.telegrambot.сonfiguration.BotConfig;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -13,13 +11,10 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.starter.SpringWebhookBot;
 
 @Slf4j
-@Getter
-@Setter
 @Service
 public class ChordsTopicBot extends SpringWebhookBot {
-
-    BotConfig botConfig;
-    ReplyHandler replyHandler;
+    private final BotConfig botConfig;
+    private final ReplyHandler replyHandler;
 
     public ChordsTopicBot(SetWebhook setWebhook, BotConfig botConfig, ReplyHandler replyHandler) {
         super(setWebhook);
@@ -33,18 +28,18 @@ public class ChordsTopicBot extends SpringWebhookBot {
             String messageText = update.getMessage().getText();
             Long chatId = update.getMessage().getChatId();
 
-            sendMessage(messageText, chatId);
+            SendMessage message = replyHandler.handleMessage(messageText, chatId);
+            sendMessage(message);
         }
         return null;
     }
 
-    private void sendMessage(String text, Long chatId){
-        SendMessage message = replyHandler.handleMessage(text, chatId);
+    private void sendMessage(SendMessage message){
         try{
             execute(message);
         }
         catch (TelegramApiException e){
-            log.error(String.format("Can't send message '%s'!",text));
+            log.error(String.format("Can't send message '%s' to '%s'!", message.getText(), message.getChatId()));
             e.printStackTrace();
         }
     }

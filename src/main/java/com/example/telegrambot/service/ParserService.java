@@ -1,26 +1,36 @@
 package com.example.telegrambot.service;
 
 import com.example.telegrambot.model.Song;
+import com.example.telegrambot.utils.ParserCategories;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Slf4j
 public class ParserService {
-    @Value("${parser.port}")
+    @Value("${application.parser.port}")
     String parserPort;
 
-    public Song[] getSongsByApi(String type){
+    public Song[] getSongsByApi(ParserCategories category){
         RestTemplate restTemplate = new RestTemplate();
         String parserPath = String.format("http://localhost:%s/%s",
-                parserPort, type.toLowerCase());
+                parserPort, category.getTitle().toLowerCase());
 
         ResponseEntity<Song[]> response =
                 restTemplate.getForEntity(parserPath, Song[].class);
-
         return response.getBody();
+    }
+
+    public List<Song> getSongsTopic(ParserCategories category, int count){
+        return Arrays.stream(getSongsByApi(category))
+                .limit(count)
+                .collect(Collectors.toList());
     }
 }
