@@ -26,12 +26,7 @@ public class ParserService {
 
         ResponseEntity<Song[]> response =
                 restTemplate.getForEntity(parserPath, Song[].class);
-        return response.getBody();
-    }
-
-    public List<Song> getSongsTopic(ParserCategories category, int count){
-        return Arrays.stream(getSongsByApi(category))
-                .limit(count)
-                .collect(Collectors.toList());
+        Song[] songsAsArray = response.getBody();
+        return Arrays.asList(songsAsArray);
     }
 }
