@@ -7,9 +7,10 @@ public class Song {
     private String name;
     private String artist;
     private String url;
+    private int position;
 
     @Override
     public String toString() {
-        return String.format("%s - %s", artist, name);
+        return String.format("%s. %s - %s", position, artist, name);
     }
 }
