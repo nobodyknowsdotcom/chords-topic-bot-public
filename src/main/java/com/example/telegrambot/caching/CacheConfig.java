@@ -1,4 +1,4 @@
-package com.example.telegrambot.сonfiguration;
+package com.example.telegrambot.caching;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;

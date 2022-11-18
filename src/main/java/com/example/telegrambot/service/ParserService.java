@@ -18,7 +18,7 @@ public class ParserService {
     @Value("${application.parser.port}")
     String parserPort;
 
-    @Cacheable(value = "Songs", key = "#category")
+    @Cacheable(value = "Songs", key = "#category.title")
     public List<Song> getSongs(ParserCategories category){
         RestTemplate restTemplate = new RestTemplate();
         String parserPath = String.format("http://localhost:%s/%s",
