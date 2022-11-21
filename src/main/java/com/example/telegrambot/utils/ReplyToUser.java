@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum ButtonsReply {
+public enum ReplyToUser {
     START ("Привет, я бот-скидыватель самых популярных подборов аккордов с AmDm!" +
                    "\nПросто попроси топ за нужный тебе промежуток времени и наслаждайся :)"),
     HELP ("Моя работа - кидать тебе самые популярные разборы песен с сайта AmDm."),

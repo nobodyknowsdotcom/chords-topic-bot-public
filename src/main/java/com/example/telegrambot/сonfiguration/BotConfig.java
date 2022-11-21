@@ -1,16 +1,18 @@
 package com.example.telegrambot.сonfiguration;
 
-import lombok.Data;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-@Configuration
-@Data
+@Component
+@Getter
 public class BotConfig {
-    @Value("${telegram.webhook-path}")
+    @Value("${bot.webhook-path}")
     String webhookPath;
     @Value("${bot.token}")
     private String token;
     @Value("${bot.name}")
     private String name;
+    @Value("${bot.topic-page-capability}")
+    private String pageCapability;
 }

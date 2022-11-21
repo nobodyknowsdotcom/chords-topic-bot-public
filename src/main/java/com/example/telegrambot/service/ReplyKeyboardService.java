@@ -1,6 +1,6 @@
 package com.example.telegrambot.service;
 
-import com.example.telegrambot.utils.ButtonsText;
+import com.example.telegrambot.utils.ReplyKeyboardText;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
@@ -14,10 +14,10 @@ public class ReplyKeyboardService {
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
         List<KeyboardRow> keyboard = new ArrayList<>();
 
-        keyboard.add(getButton(ButtonsText.TOPIC_FOR_TODAY.getTitle()));
-        keyboard.add(getButton(ButtonsText.TOPIC_FOR_WEEK.getTitle()));
-        keyboard.add(getButton(ButtonsText.TOPIC_FOR_MONTH.getTitle()));
-        keyboard.add(getButton(ButtonsText.TOPIC_FOR_ALL_TIME.getTitle()));
+        keyboard.add(getButton(ReplyKeyboardText.TOPIC_FOR_TODAY.getTitle()));
+        keyboard.add(getButton(ReplyKeyboardText.TOPIC_FOR_WEEK.getTitle()));
+        keyboard.add(getButton(ReplyKeyboardText.TOPIC_FOR_MONTH.getTitle()));
+        keyboard.add(getButton(ReplyKeyboardText.TOPIC_FOR_ALL_TIME.getTitle()));
 
         keyboardMarkup.setKeyboard(keyboard);
         keyboardMarkup.setResizeKeyboard(true);

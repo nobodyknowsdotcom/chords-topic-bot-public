@@ -1,8 +1,8 @@
 package com.example.telegrambot.service;
 
-import com.example.telegrambot.model.Song;
-import com.example.telegrambot.model.SongsTopic;
-import com.example.telegrambot.utils.ButtonsReply;
+import com.example.telegrambot.dto.Song;
+import com.example.telegrambot.dto.SongsTopic;
+import com.example.telegrambot.utils.ReplyToUser;
 import com.example.telegrambot.utils.ParserCategories;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @Component
 public class ReplyHandler {
-    @Value("${application.topic-page-capability}")
+    @Value("${bot.topic-page-capability}")
     private int topicPageCapability;
     private final ParserService parser;
 
@@ -33,27 +33,27 @@ public class ReplyHandler {
 
         switch (incomingMessageText){
             case "/start":
-                messageToSend.setText(ButtonsReply.START.getTitle());
+                messageToSend.setText(ReplyToUser.START.getTitle());
                 setupReplyKeyboardMarkup(messageToSend);
                 break;
             case "/help":
-                messageToSend.setText(ButtonsReply.HELP.getTitle());
+                messageToSend.setText(ReplyToUser.HELP.getTitle());
                 setupReplyKeyboardMarkup(messageToSend);
                 break;
             case "Хочу топ разборов песен за сегодня \uD83E\uDD20":
-                messageToSend.setText(ButtonsReply.TOPIC_FOR_TODAY.getTitle());
+                messageToSend.setText(ReplyToUser.TOPIC_FOR_TODAY.getTitle());
                 songsList = parser.getSongs(ParserCategories.TODAY);
                 break;
             case "Хочу топ разборов песен за неделю ☺️":
-                messageToSend.setText(ButtonsReply.TOPIC_FOR_WEEK.getTitle());
+                messageToSend.setText(ReplyToUser.TOPIC_FOR_WEEK.getTitle());
                 songsList = parser.getSongs(ParserCategories.WEEK);
                 break;
             case "Хочу топ разборов песен за месяц \uD83E\uDD78":
-                messageToSend.setText(ButtonsReply.TOPIC_FOR_MONTH.getTitle());
+                messageToSend.setText(ReplyToUser.TOPIC_FOR_MONTH.getTitle());
                 songsList = parser.getSongs(ParserCategories.MONTH);
                 break;
             case "Хочу топ разборов песен за все время \uD83E\uDD79":
-                messageToSend.setText(ButtonsReply.TOPIC_FOR_ALL_TIME.getTitle());
+                messageToSend.setText(ReplyToUser.TOPIC_FOR_ALL_TIME.getTitle());
                 songsList = parser.getSongs(ParserCategories.ALL);
                 break;
             default:
