@@ -1,0 +1,11 @@
+bot:
+  name: Chords Topic Bot
+  webhook-path: this is secret :)
+  topic-page-capability: '10'
+  token: this is secret :)
+server:
+  port: '8080'
+cache-cleaner:
+  config: 30 0 * * * *
+parser:
+  port: '8050'
