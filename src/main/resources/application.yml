@@ -6,6 +6,6 @@ bot:
 server:
   port: '8080'
 cache-cleaner:
-  config: 30 0 * * * *
+  config: 30 0 2 * * *
 parser:
   port: '8050'
