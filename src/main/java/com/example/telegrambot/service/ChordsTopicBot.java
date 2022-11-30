@@ -14,9 +14,9 @@ import org.telegram.telegrambots.starter.SpringWebhookBot;
 @Service
 public class ChordsTopicBot extends SpringWebhookBot {
     private final BotConfig botConfig;
-    private final ReplyHandler replyHandler;
+    private final ReplyKeyboardButtonsHandler replyHandler;
 
-    public ChordsTopicBot(SetWebhook setWebhook, BotConfig botConfig, ReplyHandler replyHandler) {
+    public ChordsTopicBot(SetWebhook setWebhook, BotConfig botConfig, ReplyKeyboardButtonsHandler replyHandler) {
         super(setWebhook);
         this.botConfig = botConfig;
         this.replyHandler = replyHandler;

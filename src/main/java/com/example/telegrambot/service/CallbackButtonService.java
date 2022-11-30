@@ -1,6 +1,6 @@
 package com.example.telegrambot.service;
 
-import com.example.telegrambot.dto.Song;
+import com.example.telegrambot.model.Song;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;

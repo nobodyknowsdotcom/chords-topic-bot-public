@@ -1,4 +1,4 @@
-package com.example.telegrambot.dto;
+package com.example.telegrambot.model;
 
 import lombok.Data;
 

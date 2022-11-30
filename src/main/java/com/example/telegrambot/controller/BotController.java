@@ -12,7 +12,7 @@ public class BotController {
     private final ChordsTopicBot bot;
 
     @PostMapping("/")
-    private BotApiMethod<?> onUpdateReceived(@RequestBody Update update){
+    public BotApiMethod<?> onUpdateReceived(@RequestBody Update update){
         return bot.onWebhookUpdateReceived(update);
     }
 }
