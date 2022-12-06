@@ -1,4 +1,4 @@
-package com.example.telegrambot.service;
+package com.example.telegrambot.botapi;
 
 import com.example.telegrambot.сonfiguration.BotConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -12,14 +12,14 @@ import org.telegram.telegrambots.starter.SpringWebhookBot;
 
 @Slf4j
 @Service
-public class ChordsTopicBot extends SpringWebhookBot {
+public class Bot extends SpringWebhookBot {
     private final BotConfig botConfig;
-    private final ReplyKeyboardButtonsHandler replyHandler;
+    private final TelegramFacade telegramFacade;
 
-    public ChordsTopicBot(SetWebhook setWebhook, BotConfig botConfig, ReplyKeyboardButtonsHandler replyHandler) {
+    public Bot(SetWebhook setWebhook, BotConfig botConfig, TelegramFacade telegramFacade) {
         super(setWebhook);
         this.botConfig = botConfig;
-        this.replyHandler = replyHandler;
+        this.telegramFacade = telegramFacade;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ChordsTopicBot extends SpringWebhookBot {
             String messageText = update.getMessage().getText();
             Long chatId = update.getMessage().getChatId();
 
-            SendMessage message = replyHandler.handleMessage(messageText, chatId);
+            SendMessage message = telegramFacade.handleMessage(messageText, chatId);
             sendMessage(message);
         }
         return null;

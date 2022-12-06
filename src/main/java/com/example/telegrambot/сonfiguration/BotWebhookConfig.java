@@ -1,7 +1,7 @@
 package com.example.telegrambot.сonfiguration;
 
-import com.example.telegrambot.service.ChordsTopicBot;
-import com.example.telegrambot.service.ReplyKeyboardButtonsHandler;
+import com.example.telegrambot.botapi.Bot;
+import com.example.telegrambot.botapi.TelegramFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +20,7 @@ public class BotWebhookConfig {
 
     @Bean
     @Primary
-    public ChordsTopicBot springWebhookBot(SetWebhook setWebhook, BotConfig botConfig, ReplyKeyboardButtonsHandler replyHandler) {
-        return new ChordsTopicBot(setWebhook, botConfig, replyHandler);
+    public Bot springWebhookBot(SetWebhook setWebhook, BotConfig botConfig, TelegramFacade telegramFacade) {
+        return new Bot(setWebhook, botConfig, telegramFacade);
     }
 }

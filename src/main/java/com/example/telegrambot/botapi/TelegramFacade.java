@@ -1,6 +1,9 @@
-package com.example.telegrambot.service;
+package com.example.telegrambot.botapi;
 
 import com.example.telegrambot.model.SongsTopic;
+import com.example.telegrambot.service.Parser;
+import com.example.telegrambot.botapi.buttons.MessageConstructor;
+import com.example.telegrambot.botapi.buttons.ReplyKeyboard;
 import com.example.telegrambot.utils.ReplyToUser;
 import com.example.telegrambot.utils.TopicCategories;
 import lombok.extern.slf4j.Slf4j;
@@ -11,11 +14,11 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 
 @Slf4j
 @Component
-public class ReplyKeyboardButtonsHandler {
-    private final ParserService parserService;
+public class TelegramFacade {
+    private final Parser parser;
 
-    public ReplyKeyboardButtonsHandler(ParserService parser) {
-        this.parserService = parser;
+    public TelegramFacade(Parser parser) {
+        this.parser = parser;
     }
 
     public SendMessage handleMessage(String incomingMessageText, Long chatId){
@@ -35,18 +38,18 @@ public class ReplyKeyboardButtonsHandler {
             }
             case "Хочу топ разборов песен за сегодня \uD83E\uDD20" -> {
                 messageToSend.setText(ReplyToUser.TOPIC_FOR_TODAY.getTitle());
-                topic = parserService.getDefaultTopicByCategory(TopicCategories.TODAY);
+                topic = parser.getDefaultTopicByCategory(TopicCategories.TODAY);
             } case "Хочу топ разборов песен за неделю ☺️" -> {
                 messageToSend.setText(ReplyToUser.TOPIC_FOR_WEEK.getTitle());
-                topic = parserService.getDefaultTopicByCategory(TopicCategories.WEEK);
+                topic = parser.getDefaultTopicByCategory(TopicCategories.WEEK);
             }
             case "Хочу топ разборов песен за месяц \uD83E\uDD78" -> {
                 messageToSend.setText(ReplyToUser.TOPIC_FOR_MONTH.getTitle());
-                topic = parserService.getDefaultTopicByCategory(TopicCategories.MONTH);
+                topic = parser.getDefaultTopicByCategory(TopicCategories.MONTH);
             }
             case "Хочу топ разборов песен за все время \uD83E\uDD79" -> {
                 messageToSend.setText(ReplyToUser.TOPIC_FOR_ALL_TIME.getTitle());
-                topic = parserService.getDefaultTopicByCategory(TopicCategories.ALL);
+                topic = parser.getDefaultTopicByCategory(TopicCategories.ALL);
             }
             default -> {
                 messageToSend.setText("Братик, что ты делаешь? Я не могу обработать твоё сообщение :(");
@@ -54,8 +57,8 @@ public class ReplyKeyboardButtonsHandler {
             }
         }
 
-        if(!topic.getSongs().isEmpty()){
-            CallbackButtonService.addSongsAsButtons(messageToSend, topic.getSongs());
+        if(topic.getSongs() != null && !topic.getSongs().isEmpty()){
+            MessageConstructor.addCallbackButtons(messageToSend, topic);
         }
 
         return messageToSend;
@@ -63,7 +66,7 @@ public class ReplyKeyboardButtonsHandler {
 
     private static void setupReplyKeyboardMarkup(SendMessage messageToSend) {
         ReplyKeyboardMarkup keyboardButtons;
-        keyboardButtons = ReplyKeyboardService.getKeyboardMarkup();
+        keyboardButtons = ReplyKeyboard.getKeyboardMarkup();
         messageToSend.setReplyMarkup(keyboardButtons);
     }
 }

@@ -1,7 +1,7 @@
 bot:
   name: Chords Topic Bot
-  webhook-path: https://d5a2-194-226-248-0.eu.ngrok.io
-  topic-page-capability: '10'
+  webhook-path: https://4234-176-59-195-189.eu.ngrok.io
+  topic-page-capability: '15'
   token: 5605033533:AAHEd_vnu9mleplw4VXKNBXozHZ-ABZmWdk
 
 server:

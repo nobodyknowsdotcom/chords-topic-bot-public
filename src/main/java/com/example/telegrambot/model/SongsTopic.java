@@ -1,7 +1,7 @@
 package com.example.telegrambot.model;
 
 
-import com.example.telegrambot.dto.PageDto;
+import com.example.telegrambot.dto.Page;
 import com.example.telegrambot.utils.TopicCategories;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -29,22 +29,19 @@ public class SongsTopic {
         this.sort = sort;
     }
 
-
-    public String getNextPageUrl(){
-        this.page += 1;
-        return this.toRequestUrl();
+    public void incrementPage(){
+        page += 1;
     }
 
-    public String getPreviousPageUrl(){
-        this.page -= 1;
-        return this.toRequestUrl();
+    public void decrementPage(){
+        page -= 1;
     }
 
     public String toRequestUrl(){
         return String.format("%s?page=%s&size=%s&sort=%s", category, page, size, sort);
     }
 
-    public void updateFromDto(PageDto dto){
+    public void updateFromDto(Page dto){
         this.songs = dto.getSongs();
         this.hasNext = dto.isHasNext();
         this.hasPrevious = dto.isHasPrevious();

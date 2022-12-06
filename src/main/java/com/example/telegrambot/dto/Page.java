@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class PageDto {
+public class Page {
     private List<Song> songs;
     private boolean hasNext;
     private boolean hasPrevious;
