@@ -1,36 +1,36 @@
 package com.example.telegrambot.botapi.buttons;
 
 import com.example.telegrambot.model.SongsTopic;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class Pagination {
-    public static List<InlineKeyboardButton> getPaginationButtons(SongsTopic topic){
+@Component
+public class PaginationButtonsConstructor {
+    public static List<InlineKeyboardButton> getPaginationButtons(SongsTopic topic, String chatId){
         List<InlineKeyboardButton> paginationRow = new ArrayList<>();
 
         if(topic.isHasPrevious()){
-            paginationRow.add(getBackButton());
+            paginationRow.add(getBackButton(chatId));
         }
         if(topic.isHasNext()){
-            paginationRow.add(getForwardButton());
+            paginationRow.add(getForwardButton(chatId));
         }
         return paginationRow;
     }
 
-    private static InlineKeyboardButton getBackButton(){
+    private static InlineKeyboardButton getBackButton(String chatId){
         InlineKeyboardButton button = new InlineKeyboardButton();
-        button.setCallbackData("back");
+        button.setCallbackData(String.format("back/%s", chatId));
         button.setText("⏪️");
         return button;
     }
 
-    private static InlineKeyboardButton getForwardButton(){
+    private static InlineKeyboardButton getForwardButton(String chatId){
         InlineKeyboardButton button = new InlineKeyboardButton();
-        button.setCallbackData("forward");
+        button.setCallbackData(String.format("forward/%s", chatId));
         button.setText("⏩");
         return button;
     }

@@ -1,7 +1,7 @@
-package com.example.telegrambot.botapi;
+package com.example.telegrambot.botapi.handlers;
 
 import com.example.telegrambot.model.SongsTopic;
-import com.example.telegrambot.service.Parser;
+import com.example.telegrambot.service.ParserApi;
 import com.example.telegrambot.botapi.buttons.MessageConstructor;
 import com.example.telegrambot.botapi.buttons.ReplyKeyboard;
 import com.example.telegrambot.utils.ReplyToUser;
@@ -9,25 +9,26 @@ import com.example.telegrambot.utils.TopicCategories;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 
 
 @Slf4j
 @Component
 public class TelegramFacade {
-    private final Parser parser;
+    private final ParserApi parserApi;
 
-    public TelegramFacade(Parser parser) {
-        this.parser = parser;
+    public TelegramFacade(ParserApi parserApi) {
+        this.parserApi = parserApi;
     }
 
-    public SendMessage handleMessage(String incomingMessageText, Long chatId){
+    public SendMessage handleInputMessage(Message message){
         SendMessage messageToSend = new SendMessage();
         SongsTopic topic = new SongsTopic();
 
-        messageToSend.setChatId(chatId.toString());
+        messageToSend.setChatId(message.getChatId().toString());
 
-        switch (incomingMessageText) {
+        switch (message.getText()) {
             case "/start" -> {
                 messageToSend.setText(ReplyToUser.START.getTitle());
                 setupReplyKeyboardMarkup(messageToSend);
@@ -38,18 +39,18 @@ public class TelegramFacade {
             }
             case "Хочу топ разборов песен за сегодня \uD83E\uDD20" -> {
                 messageToSend.setText(ReplyToUser.TOPIC_FOR_TODAY.getTitle());
-                topic = parser.getDefaultTopicByCategory(TopicCategories.TODAY);
+                topic = parserApi.getDefaultTopicByCategory(TopicCategories.TODAY);
             } case "Хочу топ разборов песен за неделю ☺️" -> {
                 messageToSend.setText(ReplyToUser.TOPIC_FOR_WEEK.getTitle());
-                topic = parser.getDefaultTopicByCategory(TopicCategories.WEEK);
+                topic = parserApi.getDefaultTopicByCategory(TopicCategories.WEEK);
             }
             case "Хочу топ разборов песен за месяц \uD83E\uDD78" -> {
                 messageToSend.setText(ReplyToUser.TOPIC_FOR_MONTH.getTitle());
-                topic = parser.getDefaultTopicByCategory(TopicCategories.MONTH);
+                topic = parserApi.getDefaultTopicByCategory(TopicCategories.MONTH);
             }
             case "Хочу топ разборов песен за все время \uD83E\uDD79" -> {
                 messageToSend.setText(ReplyToUser.TOPIC_FOR_ALL_TIME.getTitle());
-                topic = parser.getDefaultTopicByCategory(TopicCategories.ALL);
+                topic = parserApi.getDefaultTopicByCategory(TopicCategories.ALL);
             }
             default -> {
                 messageToSend.setText("Братик, что ты делаешь? Я не могу обработать твоё сообщение :(");

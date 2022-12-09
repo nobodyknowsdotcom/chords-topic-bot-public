@@ -1,5 +1,6 @@
 package com.example.telegrambot.botapi;
 
+import com.example.telegrambot.botapi.handlers.TelegramFacade;
 import com.example.telegrambot.сonfiguration.BotConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,16 +26,13 @@ public class Bot extends SpringWebhookBot {
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
         if(update.hasMessage() && update.getMessage().hasText()){
-            String messageText = update.getMessage().getText();
-            Long chatId = update.getMessage().getChatId();
-
-            SendMessage message = telegramFacade.handleMessage(messageText, chatId);
-            sendMessage(message);
+            SendMessage message = telegramFacade.handleInputMessage(update.getMessage());
+            send(message);
         }
         return null;
     }
 
-    private void sendMessage(SendMessage message){
+    private void send(SendMessage message){
         try{
             execute(message);
         }

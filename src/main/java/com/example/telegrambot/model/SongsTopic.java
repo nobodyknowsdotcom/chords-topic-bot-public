@@ -1,7 +1,6 @@
 package com.example.telegrambot.model;
 
 
-import com.example.telegrambot.dto.Page;
 import com.example.telegrambot.utils.TopicCategories;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;

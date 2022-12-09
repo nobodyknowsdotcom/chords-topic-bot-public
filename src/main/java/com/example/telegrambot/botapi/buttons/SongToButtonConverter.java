@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class Callback {
+public class SongToButtonConverter {
     public static List<List<InlineKeyboardButton>> getSongsAsButtons(List<Song> songs){
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
         for(Song song : songs){

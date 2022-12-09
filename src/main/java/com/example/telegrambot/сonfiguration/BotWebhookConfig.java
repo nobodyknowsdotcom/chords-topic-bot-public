@@ -1,7 +1,7 @@
 package com.example.telegrambot.сonfiguration;
 
 import com.example.telegrambot.botapi.Bot;
-import com.example.telegrambot.botapi.TelegramFacade;
+import com.example.telegrambot.botapi.handlers.TelegramFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

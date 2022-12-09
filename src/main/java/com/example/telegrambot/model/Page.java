@@ -1,4 +1,4 @@
-package com.example.telegrambot.dto;
+package com.example.telegrambot.model;
 
 import com.example.telegrambot.model.Song;
 import lombok.Data;

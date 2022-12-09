@@ -1,6 +1,6 @@
 package com.example.telegrambot.service;
 
-import com.example.telegrambot.dto.Page;
+import com.example.telegrambot.model.Page;
 import com.example.telegrambot.model.SongsTopic;
 import com.example.telegrambot.utils.TopicCategories;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @Slf4j
-public class Parser {
+public class ParserApi {
     @Value("${parser.port}")
     private String parserPort;
     @Value("${parser.request.size}")

@@ -1,6 +1,5 @@
-package com.example.telegrambot.botapi.callbackquerry;
+package com.example.telegrambot.botapi.handlers.callback;
 
-import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.stereotype.Component;
 
 /**
