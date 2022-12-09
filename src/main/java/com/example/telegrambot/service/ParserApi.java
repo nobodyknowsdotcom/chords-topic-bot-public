@@ -1,8 +1,8 @@
 package com.example.telegrambot.service;
 
 import com.example.telegrambot.model.Page;
-import com.example.telegrambot.model.SongsTopic;
-import com.example.telegrambot.utils.TopicCategories;
+import com.example.telegrambot.model.SongsPage;
+import com.example.telegrambot.utils.BotState;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -20,8 +20,8 @@ public class ParserApi {
     @Value("${parser.request.sort}")
     private String sort;
 
-    public SongsTopic getDefaultTopicByCategory(TopicCategories category){
-        SongsTopic topic = new SongsTopic(category, 0, size, sort);
+    public SongsPage getDefaultTopicByCategory(BotState category){
+        SongsPage topic = new SongsPage(category, 0, size, sort);
         Page page = getTopicPage(topic.toRequestUrl());
         topic.updateFromDto(page);
         return topic;

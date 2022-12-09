@@ -1,6 +1,5 @@
 package com.example.telegrambot.botapi;
 
-import com.example.telegrambot.botapi.handlers.TelegramFacade;
 import com.example.telegrambot.сonfiguration.BotConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,11 +12,11 @@ import org.telegram.telegrambots.starter.SpringWebhookBot;
 
 @Slf4j
 @Service
-public class Bot extends SpringWebhookBot {
+public class SongsTopicBot extends SpringWebhookBot {
     private final BotConfig botConfig;
     private final TelegramFacade telegramFacade;
 
-    public Bot(SetWebhook setWebhook, BotConfig botConfig, TelegramFacade telegramFacade) {
+    public SongsTopicBot(SetWebhook setWebhook, BotConfig botConfig, TelegramFacade telegramFacade) {
         super(setWebhook);
         this.botConfig = botConfig;
         this.telegramFacade = telegramFacade;
@@ -25,19 +24,18 @@ public class Bot extends SpringWebhookBot {
 
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-        if(update.hasMessage() && update.getMessage().hasText()){
-            SendMessage message = telegramFacade.handleInputMessage(update.getMessage());
-            send(message);
-        }
-        return null;
+        return telegramFacade.handleUpdate(update);
     }
 
-    private void send(SendMessage message){
-        try{
+    private void sendMessage(SendMessage message){
+        try {
+            log.info(String.format("Sent message '%s...' to '%s'",
+                    message.getText().substring(0, 10), message.getChatId()));
             execute(message);
         }
         catch (TelegramApiException e){
-            log.error(String.format("Can't send message '%s' to '%s'!", message.getText(), message.getChatId()));
+            log.error(String.format("Can't send message '%s' to '%s'!",
+                    message.getText().substring(0, 10), message.getChatId()));
             e.printStackTrace();
         }
     }

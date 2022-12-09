@@ -1,11 +1,14 @@
 package com.example.telegrambot.model;
 
-import com.example.telegrambot.model.SongsTopic;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document("users")
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
 public class User {
     long chatId;
-    SongsTopic topic;
+    SongsPage topic;
 }

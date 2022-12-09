@@ -1,7 +1,7 @@
 package com.example.telegrambot.model;
 
 
-import com.example.telegrambot.utils.TopicCategories;
+import com.example.telegrambot.utils.BotState;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,16 +12,16 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SongsTopic {
+public class SongsPage {
     private List<Song> songs;
-    private TopicCategories category;
+    private BotState category;
     private int page;
     private int size;
     private String sort;
     private boolean hasNext;
     private boolean hasPrevious;
 
-    public SongsTopic(TopicCategories category, int page, int size, String sort){
+    public SongsPage(BotState category, int page, int size, String sort){
         this.category = category;
         this.page = page;
         this.size = size;

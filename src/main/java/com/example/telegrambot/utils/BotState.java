@@ -5,10 +5,13 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum TopicCategories {
+public enum BotState {
     TODAY,
     WEEK,
     MONTH,
-    ALL
+    ALL,
+    HELP,
+    START,
+    ERROR
 
 }
