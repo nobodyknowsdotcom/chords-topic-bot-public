@@ -3,46 +3,41 @@ package com.example.telegrambot.model;
 
 import com.example.telegrambot.utils.BotState;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 @Slf4j
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class SongsPage {
-    private List<Song> songs;
-    private BotState category;
-    private int page;
-    private int size;
-    private String sort;
-    private boolean hasNext;
-    private boolean hasPrevious;
+    List<Song> songs;
+    BotState category;
+    Pagination pagination;
 
     public SongsPage(BotState category, int page, int size, String sort){
         this.category = category;
-        this.page = page;
-        this.size = size;
-        this.sort = sort;
-    }
-
-    public void incrementPage(){
-        page += 1;
-    }
-
-    public void decrementPage(){
-        page -= 1;
+        this.pagination = new Pagination(page, size, sort);
     }
 
     public String toRequestUrl(){
-        return String.format("%s?page=%s&size=%s&sort=%s", category, page, size, sort);
+        return String.format("%s?%s", category, pagination.toQueryParams());
     }
 
-    public void updateFromDto(Page dto){
+    public String getNextPageUrl(){
+        return String.format("%s?%s", category, pagination.getQueryParamsForNextPage());
+    }
+
+    public String getPreviousPageUrl(){
+        return String.format("%s?%s", category, pagination.getQueryParamsForPreviousPage());
+    }
+
+    public void updateFromDto(PageDto dto){
         this.songs = dto.getSongs();
-        this.hasNext = dto.isHasNext();
-        this.hasPrevious = dto.isHasPrevious();
+        pagination.setHasNext(dto.isHasNext());
+        pagination.setHasPrevious(dto.isHasPrevious());
     }
 }

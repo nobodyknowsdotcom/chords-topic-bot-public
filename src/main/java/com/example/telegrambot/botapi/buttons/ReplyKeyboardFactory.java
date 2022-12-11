@@ -2,7 +2,6 @@ package com.example.telegrambot.botapi.buttons;
 
 import com.example.telegrambot.utils.ReplyKeyboardText;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ReplyKeyboard {
+public class ReplyKeyboardFactory {
     public static ReplyKeyboardMarkup getKeyboardMarkup(){
         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
         List<KeyboardRow> keyboard = new ArrayList<>();

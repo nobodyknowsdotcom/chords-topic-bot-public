@@ -1,6 +1,6 @@
 package com.example.telegrambot.service;
 
-import com.example.telegrambot.model.Page;
+import com.example.telegrambot.model.PageDto;
 import com.example.telegrambot.model.SongsPage;
 import com.example.telegrambot.utils.BotState;
 import lombok.extern.slf4j.Slf4j;
@@ -22,29 +22,29 @@ public class ParserApi {
 
     public SongsPage getDefaultTopicByCategory(BotState category){
         SongsPage topic = new SongsPage(category, 0, size, sort);
-        Page page = getTopicPage(topic.toRequestUrl());
-        topic.updateFromDto(page);
+        PageDto pageDto = getTopicPage(topic.toRequestUrl());
+        topic.updateFromDto(pageDto);
         return topic;
     }
     @Cacheable(value = "Songs", key = "#requestUrl")
-    public Page getTopicPage(String requestUrl){
-        ResponseEntity<Page> response = makeRequestToParserApi(requestUrl);
-        Page topicPage = response.getBody();
+    public PageDto getTopicPage(String requestUrl){
+        ResponseEntity<PageDto> response = makeRequestToParserApi(requestUrl);
+        PageDto topicPageDto = response.getBody();
 
-        if (topicPage != null) {
-            return topicPage;
+        if (topicPageDto != null) {
+            return topicPageDto;
         }
         else {
             log.info("Got empty dto from parser service");
-            return new Page();
+            return new PageDto();
         }
     }
 
-    private ResponseEntity<Page> makeRequestToParserApi(String requestUrl){
+    private ResponseEntity<PageDto> makeRequestToParserApi(String requestUrl){
         RestTemplate restTemplate = new RestTemplate();
         String parserPath = String.format("http://localhost:%s/%s",
                 parserPort, requestUrl);
 
-        return restTemplate.getForEntity(parserPath, Page.class);
+        return restTemplate.getForEntity(parserPath, PageDto.class);
     }
 }

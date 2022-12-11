@@ -42,7 +42,7 @@ public class GetTopicHandler implements InputMessageHandler {
                 songsPage = parserApi.getDefaultTopicByCategory(BotState.ALL);
             }
             default -> {
-                messageToSend.setText("Братик, что ты делаешь? Я не могу обработать твоё сообщение :(");
+                messageToSend.setText(ReplyToUser.OTHER.getTitle());
                 ButtonsFactory.addReplyKeyboardMarkup(messageToSend);
             }
         }

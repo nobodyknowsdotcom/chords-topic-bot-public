@@ -1,21 +1,14 @@
 bot:
   name: Chords Topic Bot
-  webhook-path: https://0348-194-226-248-0.eu.ngrok.io
+  webhook-path: https://63ba-194-226-248-0.eu.ngrok.io
   topic-page-capability: '15'
   token: 5605033533:AAHEd_vnu9mleplw4VXKNBXozHZ-ABZmWdk
-  emojis:
-    has-next-page: "\uD83D\uDC49"
-    has-previous-page: "\uD83D\uDC48"
-    has-no-page: "\uD83D\uDE45\u200D♀️"
 
 server:
   port: '8080'
 
 cache-cleaner:
   config: 30 0 2 * * *
-
-mongodb:
-  uri: mongodb://admin:IUH6e3CwbmiR5XvY@SG-desert-bongo-1157-55366.servers.mongodirector.com:27017/admin
 
 parser:
   port: '8050'

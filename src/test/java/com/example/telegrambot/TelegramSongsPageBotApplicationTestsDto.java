@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class TelegramSongsPageBotApplicationTests {
+class TelegramSongsPageBotApplicationTestsDto {
     @Value("${parser.request.size}")
     private int size;
     @Value("${parser.request.sort}")

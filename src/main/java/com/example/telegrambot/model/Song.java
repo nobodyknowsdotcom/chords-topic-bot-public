@@ -1,13 +1,16 @@
 package com.example.telegrambot.model;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 public class Song {
-    private String name;
-    private String artist;
-    private String url;
-    private int position;
+    String name;
+    String artist;
+    String url;
+    int position;
 
     @Override
     public String toString() {

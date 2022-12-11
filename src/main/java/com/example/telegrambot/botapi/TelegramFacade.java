@@ -1,6 +1,5 @@
 package com.example.telegrambot.botapi;
 
-import com.example.telegrambot.repository.UserRepository;
 import com.example.telegrambot.utils.BotState;
 import com.example.telegrambot.utils.ReplyToUser;
 import lombok.extern.slf4j.Slf4j;
@@ -14,10 +13,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Component
 public class TelegramFacade {
     private final BotStateContext botStateContext;
-    private final UserRepository userRepository;
 
-    public TelegramFacade(UserRepository userRepository, BotStateContext botStateContext) {
-        this.userRepository = userRepository;
+    public TelegramFacade(BotStateContext botStateContext) {
         this.botStateContext = botStateContext;
     }
 
@@ -32,32 +29,16 @@ public class TelegramFacade {
         BotState state;
 
         switch (message.getText()) {
-            case "/start" -> {
-                state = BotState.START;
-            }
-            case "/help" -> {
-                state = BotState.HELP;
-            }
-            case "Хочу топ разборов песен за сегодня \uD83E\uDD20" -> {
-                state = BotState.TODAY;
-            } case "Хочу топ разборов песен за неделю ☺️" -> {
-                state = BotState.WEEK;
-            }
-            case "Хочу топ разборов песен за месяц \uD83E\uDD78" -> {
-                state = BotState.MONTH;
-            }
-            case "Хочу топ разборов песен за все время \uD83E\uDD79" -> {
-                state = BotState.ALL;
-            }
-            default -> {
-                state = BotState.ERROR;
-            }
+            case "/start" -> state = BotState.START;
+            case "/help" -> state = BotState.HELP;
+            case "Хочу топ разборов песен за сегодня \uD83E\uDD20" -> state = BotState.TODAY;
+            case "Хочу топ разборов песен за неделю ☺️" -> state = BotState.WEEK;
+            case "Хочу топ разборов песен за месяц \uD83E\uDD78" -> state = BotState.MONTH;
+            case "Хочу топ разборов песен за все время \uD83E\uDD79" -> state = BotState.ALL;
+            default -> state = BotState.ERROR;
         }
 
-        SendMessage messageToSend = botStateContext.processInputMessage(state, message);
-
-        // Сохранить пользователя и сонг пейдж в бд илиобновить, ели он там уже есть
-        return messageToSend;
+        return botStateContext.processInputMessage(state, message);
     }
 
     private SendMessage getEmptyMessageTemplate(Update update){

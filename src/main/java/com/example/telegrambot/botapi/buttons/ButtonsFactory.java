@@ -15,7 +15,7 @@ public class ButtonsFactory {
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
 
         List<List<InlineKeyboardButton>> buttonRows = SongToButtonConverter.getSongsAsButtons(topic.getSongs());
-        List<InlineKeyboardButton> paginationButtons = PaginationButtonsConstructor.getPaginationButtons(topic, message.getChatId());
+        List<InlineKeyboardButton> paginationButtons = PaginationButtonsFactory.getPaginationButtons(topic);
 
         buttonRows.add(paginationButtons);
         markup.setKeyboard(buttonRows);
@@ -24,7 +24,7 @@ public class ButtonsFactory {
 
     public static void addReplyKeyboardMarkup(SendMessage message){
         ReplyKeyboardMarkup keyboardButtons;
-        keyboardButtons = ReplyKeyboard.getKeyboardMarkup();
+        keyboardButtons = ReplyKeyboardFactory.getKeyboardMarkup();
         message.setReplyMarkup(keyboardButtons);
     }
 }
