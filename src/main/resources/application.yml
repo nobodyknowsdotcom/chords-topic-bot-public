@@ -14,5 +14,5 @@ parser:
   port: '8050'
   request:
     sort: position
-    size: 15
+    size: 10
 

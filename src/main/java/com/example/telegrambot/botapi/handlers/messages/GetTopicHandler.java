@@ -1,4 +1,4 @@
-package com.example.telegrambot.botapi.handlers.message;
+package com.example.telegrambot.botapi.handlers.messages;
 
 import com.example.telegrambot.botapi.buttons.ButtonsFactory;
 import com.example.telegrambot.botapi.handlers.InputMessageHandler;

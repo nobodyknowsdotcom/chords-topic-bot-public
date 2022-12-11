@@ -20,7 +20,6 @@ public class Pagination {
         this.size = size;
         this.sort = sort;
     }
-
     public String toQueryParams(){
         return String.format("page=%s&size=%s&sort=%s", page, size, sort);
     }

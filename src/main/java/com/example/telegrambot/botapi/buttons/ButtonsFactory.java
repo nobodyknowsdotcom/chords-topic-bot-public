@@ -11,15 +11,20 @@ import java.util.List;
 
 @Component
 public class ButtonsFactory {
-    public static void addCallbackButtons(SendMessage message, SongsPage topic){
+    public static void addCallbackButtons(SendMessage message, SongsPage songsPage){
+        InlineKeyboardMarkup buttons = getCallbackButtons(songsPage);
+        message.setReplyMarkup(buttons);
+    }
+
+    public static InlineKeyboardMarkup getCallbackButtons(SongsPage songsPage){
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
 
-        List<List<InlineKeyboardButton>> buttonRows = SongToButtonConverter.getSongsAsButtons(topic.getSongs());
-        List<InlineKeyboardButton> paginationButtons = PaginationButtonsFactory.getPaginationButtons(topic);
+        List<List<InlineKeyboardButton>> buttonRows = SongToButtonConverter.getSongsAsButtons(songsPage.getSongs());
+        List<InlineKeyboardButton> paginationButtons = PaginationButtonsFactory.getPaginationButtons(songsPage);
 
         buttonRows.add(paginationButtons);
         markup.setKeyboard(buttonRows);
-        message.setReplyMarkup(markup);
+        return markup;
     }
 
     public static void addReplyKeyboardMarkup(SendMessage message){

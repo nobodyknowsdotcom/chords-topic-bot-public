@@ -21,13 +21,14 @@ public class ParserApi {
     private String sort;
 
     public SongsPage getDefaultTopicByCategory(BotState category){
-        SongsPage topic = new SongsPage(category, 0, size, sort);
-        PageDto pageDto = getTopicPage(topic.toRequestUrl());
-        topic.updateFromDto(pageDto);
-        return topic;
+        SongsPage songsPage = new SongsPage(category, 0, size, sort);
+
+        PageDto pageDto = getPage(songsPage.toRequestUrl());
+        songsPage.updateFromDto(pageDto);
+        return songsPage;
     }
     @Cacheable(value = "Songs", key = "#requestUrl")
-    public PageDto getTopicPage(String requestUrl){
+    public PageDto getPage(String requestUrl){
         ResponseEntity<PageDto> response = makeRequestToParserApi(requestUrl);
         PageDto topicPageDto = response.getBody();
 

@@ -1,9 +1,11 @@
 package com.example.telegrambot.botapi;
 
+import com.example.telegrambot.botapi.handlers.CallbackQueryFacade;
 import com.example.telegrambot.utils.BotState;
 import com.example.telegrambot.utils.ReplyToUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -13,12 +15,18 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Component
 public class TelegramFacade {
     private final BotStateContext botStateContext;
+    private final CallbackQueryFacade callbackQueryFacade;
 
-    public TelegramFacade(BotStateContext botStateContext) {
+    public TelegramFacade(BotStateContext botStateContext, CallbackQueryFacade callbackQueryFacade) {
         this.botStateContext = botStateContext;
+        this.callbackQueryFacade = callbackQueryFacade;
     }
 
-    public SendMessage handleUpdate(Update update){
+    public BotApiMethod handleUpdate(Update update){
+        if(update.hasCallbackQuery()){
+            return callbackQueryFacade.handleCallbackQuery(update.getCallbackQuery());
+        }
+
         if(update.hasMessage() && update.getMessage().hasText()){
             return handleInputMessage(update.getMessage());
         }
