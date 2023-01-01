@@ -1,17 +1,17 @@
 bot:
   name: Chords Topic Bot
-  webhook-path: https://63ba-194-226-248-0.eu.ngrok.io
+  webhook-path: https://cacb-194-226-248-0.eu.ngrok.io
   topic-page-capability: '15'
-  token: this is a secret
+  token: 5605033533:AAHEd_vnu9mleplw4VXKNBXozHZ-ABZmWdk
 
 server:
-  port: '8080'
+  port: '80'
 
 cache-cleaner:
   config: 30 0 2 * * *
 
 parser:
-  port: '8050'
+  port: '50'
   request:
     sort: position
     size: 10

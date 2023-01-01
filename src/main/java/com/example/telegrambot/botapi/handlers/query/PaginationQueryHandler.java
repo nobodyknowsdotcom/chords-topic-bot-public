@@ -2,12 +2,11 @@ package com.example.telegrambot.botapi.handlers.query;
 
 import com.example.telegrambot.botapi.buttons.ButtonsFactory;
 import com.example.telegrambot.botapi.handlers.QueryHandler;
+import com.example.telegrambot.factory.SongsPageFactory;
 import com.example.telegrambot.model.PageDto;
-import com.example.telegrambot.model.Pagination;
 import com.example.telegrambot.model.SongsPage;
-import com.example.telegrambot.service.ParserApi;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import com.example.telegrambot.service.ParserApiService;
+import com.example.telegrambot.utils.BotState;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -15,34 +14,26 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
 @Component
-@Slf4j
 public class PaginationQueryHandler implements QueryHandler {
-    @Value("${parser.request.sort}")
-    private String sort;
-    @Value("${parser.request.size}")
-    private int size;
-    private final ParserApi parserApi;
+    private final SongsPageFactory songsPageFactory;
+    private final ParserApiService parserApiService;
 
-    public PaginationQueryHandler(ParserApi parserApi) {
-        this.parserApi = parserApi;
+    public PaginationQueryHandler(ParserApiService parserApiService, SongsPageFactory songsPageFactory) {
+        this.parserApiService = parserApiService;
+        this.songsPageFactory = songsPageFactory;
     }
 
     public EditMessageReplyMarkup handle(CallbackQuery callbackQuery){
         EditMessageReplyMarkup editMessageReplyMarkup = new EditMessageReplyMarkup();
         Message oldMessage = callbackQuery.getMessage();
 
+        SongsPage songsPage = songsPageFactory.getFirstPageByCategory(BotState.TODAY);
 
-        SongsPage songsPage = new SongsPage();
-        Pagination pagination = new Pagination();
-        pagination.setSort("position");
-        pagination.setSize(size);
-        songsPage.setPagination(pagination);
-
-
-        PageDto pageDto = parserApi.getPage(callbackQuery.getData());
-        // Обновляем наличие соседних страниц и список песен, полученные от парсера
+        // Получаем от парсера следующую страницу
+        PageDto pageDto = parserApiService.getPage(callbackQuery.getData());
+        // Обновляем сообщение (кнопки пагинации и список песен) из которого вызван ивент
         songsPage.updateFromDto(pageDto);
-        // Обновляем категорию и номер страницы из параметров запроса
+        // Обновляем сообщение (номер страницы и категорию) из параметров запроса
         songsPage.updateFromQuery(callbackQuery.getData());
         InlineKeyboardMarkup markup = ButtonsFactory.getCallbackButtons(songsPage);
 

@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
@@ -24,12 +25,17 @@ public class TelegramFacade {
 
     public BotApiMethod handleUpdate(Update update){
         if(update.hasCallbackQuery()){
-            return callbackQueryFacade.handleCallbackQuery(update.getCallbackQuery());
+            EditMessageReplyMarkup response = callbackQueryFacade.handleCallbackQuery(update.getCallbackQuery());
+            log.info(String.format("Send pagination update %s", response.getChatId()));
+            return response;
         }
 
         if(update.hasMessage() && update.getMessage().hasText()){
-            return handleInputMessage(update.getMessage());
+            SendMessage response = handleInputMessage(update.getMessage());
+            log.info(String.format("Send message %s to %s", response.getText(), response.getChatId()));
+            return response;
         }
+        log.info(String.format("Got empty message %s", update));
         return getEmptyMessageTemplate(update);
     }
 
@@ -52,7 +58,11 @@ public class TelegramFacade {
     private SendMessage getEmptyMessageTemplate(Update update){
         SendMessage response = new SendMessage();
         response.setText(ReplyToUser.ERROR.getTitle());
-        response.setChatId(update.getMessage().getChatId());
+        try{
+            response.setChatId(update.getMessage().getChatId());
+        } catch (NullPointerException e){
+            response.setChatId(update.getMyChatMember().getChat().getId());
+        }
         return response;
     }
 }

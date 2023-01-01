@@ -3,7 +3,7 @@ package com.example.telegrambot.botapi.handlers.messages;
 import com.example.telegrambot.botapi.buttons.ButtonsFactory;
 import com.example.telegrambot.botapi.handlers.InputMessageHandler;
 import com.example.telegrambot.model.SongsPage;
-import com.example.telegrambot.service.ParserApi;
+import com.example.telegrambot.service.ParserApiService;
 import com.example.telegrambot.utils.BotState;
 import com.example.telegrambot.utils.MessageType;
 import com.example.telegrambot.utils.ReplyToUser;
@@ -12,10 +12,10 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 @Component
 public class GetTopicHandler implements InputMessageHandler {
-    private final ParserApi parserApi;
+    private final ParserApiService parserApiService;
 
-    public GetTopicHandler(ParserApi parserApi) {
-        this.parserApi = parserApi;
+    public GetTopicHandler(ParserApiService parserApiService) {
+        this.parserApiService = parserApiService;
     }
 
     @Override
@@ -27,19 +27,19 @@ public class GetTopicHandler implements InputMessageHandler {
         switch (state) {
             case TODAY -> {
                 messageToSend.setText(ReplyToUser.TOPIC_FOR_TODAY.getTitle());
-                songsPage = parserApi.getDefaultTopicByCategory(BotState.TODAY);
+                songsPage = parserApiService.getDefaultTopicByCategory(BotState.TODAY);
             }
             case WEEK -> {
                 messageToSend.setText(ReplyToUser.TOPIC_FOR_WEEK.getTitle());
-                songsPage = parserApi.getDefaultTopicByCategory(BotState.WEEK);
+                songsPage = parserApiService.getDefaultTopicByCategory(BotState.WEEK);
             }
             case MONTH -> {
                 messageToSend.setText(ReplyToUser.TOPIC_FOR_MONTH.getTitle());
-                songsPage = parserApi.getDefaultTopicByCategory(BotState.MONTH);
+                songsPage = parserApiService.getDefaultTopicByCategory(BotState.MONTH);
             }
             case ALL -> {
                 messageToSend.setText(ReplyToUser.TOPIC_FOR_ALL_TIME.getTitle());
-                songsPage = parserApi.getDefaultTopicByCategory(BotState.ALL);
+                songsPage = parserApiService.getDefaultTopicByCategory(BotState.ALL);
             }
             default -> {
                 messageToSend.setText(ReplyToUser.OTHER.getTitle());

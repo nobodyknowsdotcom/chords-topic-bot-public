@@ -1,0 +1,11 @@
+version: "3.3"
+
+services:
+  bot:
+    image: 'nobodyknowsdotcom/bot'
+    container_name: bot
+    ports:
+      - "8080:80"
+  parser:
+    image: "nobodyknowsdotcom/parser-backend"
+    container_name: parser

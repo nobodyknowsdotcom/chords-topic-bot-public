@@ -4,7 +4,7 @@ import com.example.telegrambot.botapi.handlers.query.PaginationQueryHandler;
 import com.example.telegrambot.utils.BotState;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
 /**
@@ -19,15 +19,13 @@ public class CallbackQueryFacade {
         this.paginationQueryHandler = paginationQueryHandler;
     }
 
-    public BotApiMethod handleCallbackQuery(CallbackQuery callbackQuery){
+    public EditMessageReplyMarkup handleCallbackQuery(CallbackQuery callbackQuery){
         String queryData = callbackQuery.getData();
-        log.info(String.format("Processing %s event...", queryData));
 
         if(isPaginationQuery(queryData)){
            return paginationQueryHandler.handle(callbackQuery);
         }
-
-        log.error(String.format("Not found query handler for query '%s'", queryData));
+        log.error(String.format("Cant process callbackQuery %s", callbackQuery));
         return null;
     }
 
