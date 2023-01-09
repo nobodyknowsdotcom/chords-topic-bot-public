@@ -1,6 +1,6 @@
 package com.example.telegrambot.botapi.buttons;
 
-import com.example.telegrambot.utils.ReplyKeyboardText;
+import com.example.telegrambot.enums.ReplyKeyboardText;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;

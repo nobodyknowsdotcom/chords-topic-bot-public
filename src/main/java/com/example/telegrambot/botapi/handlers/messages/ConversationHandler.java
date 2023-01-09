@@ -2,9 +2,9 @@ package com.example.telegrambot.botapi.handlers.messages;
 
 import com.example.telegrambot.botapi.buttons.ButtonsFactory;
 import com.example.telegrambot.botapi.handlers.InputMessageHandler;
-import com.example.telegrambot.utils.BotState;
-import com.example.telegrambot.utils.MessageType;
-import com.example.telegrambot.utils.ReplyToUser;
+import com.example.telegrambot.enums.BotState;
+import com.example.telegrambot.enums.MessageType;
+import com.example.telegrambot.enums.ReplyToUser;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 

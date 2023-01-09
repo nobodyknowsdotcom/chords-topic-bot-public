@@ -6,7 +6,7 @@ import com.example.telegrambot.factory.SongsPageFactory;
 import com.example.telegrambot.model.PageDto;
 import com.example.telegrambot.model.SongsPage;
 import com.example.telegrambot.service.ParserApiService;
-import com.example.telegrambot.utils.BotState;
+import com.example.telegrambot.enums.BotState;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;

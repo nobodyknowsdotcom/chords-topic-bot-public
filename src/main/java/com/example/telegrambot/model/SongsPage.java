@@ -1,7 +1,7 @@
 package com.example.telegrambot.model;
 
 
-import com.example.telegrambot.utils.BotState;
+import com.example.telegrambot.enums.BotState;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

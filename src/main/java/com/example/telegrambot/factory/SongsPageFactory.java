@@ -1,7 +1,7 @@
 package com.example.telegrambot.factory;
 
 import com.example.telegrambot.model.SongsPage;
-import com.example.telegrambot.utils.BotState;
+import com.example.telegrambot.enums.BotState;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

@@ -4,7 +4,7 @@ import com.example.telegrambot.factory.PageDtoFactory;
 import com.example.telegrambot.factory.SongsPageFactory;
 import com.example.telegrambot.model.PageDto;
 import com.example.telegrambot.model.SongsPage;
-import com.example.telegrambot.utils.BotState;
+import com.example.telegrambot.enums.BotState;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
