@@ -2,19 +2,22 @@ package com.example.telegrambot.controller;
 
 import com.example.telegrambot.botapi.SongsTopicBot;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.web.bind.annotation.*;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 @RestController
 @AllArgsConstructor
+@Log4j2
 public class BotController {
     private final SongsTopicBot songsTopicBot;
 
-    @PostMapping("/")
-    public BotApiMethod<?> onUpdateReceived(@RequestBody Update update){
+    @RequestMapping(
+            value = "/",
+            method = {RequestMethod.GET, RequestMethod.POST})
+    public BotApiMethod onUpdateReceived(@RequestBody Update update){
+        log.info(String.format("Received update %s", update.toString()));
         return songsTopicBot.onWebhookUpdateReceived(update);
     }
 }
