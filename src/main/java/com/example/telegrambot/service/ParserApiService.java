@@ -5,39 +5,37 @@ import com.example.telegrambot.factory.SongsPageFactory;
 import com.example.telegrambot.model.PageDto;
 import com.example.telegrambot.model.SongsPage;
 import com.example.telegrambot.enums.BotState;
+import com.example.telegrambot.parserapi.ParserApi;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.ConnectException;
 
 @Service
 @Slf4j
 public class ParserApiService {
-    @Value("${parser.port}")
-    private String parserPort;
     private final SongsPageFactory songsPageFactory;
+    private final ParserApi parserApi;
 
-    public ParserApiService(SongsPageFactory songsPageFactory) {
+    public ParserApiService(SongsPageFactory songsPageFactory, ParserApi parserApi) {
         this.songsPageFactory = songsPageFactory;
+        this.parserApi = parserApi;
     }
 
     public SongsPage getDefaultTopicByCategory(BotState category){
-        SongsPage defaultPage = songsPageFactory.getFirstPageByCategory(category);
+        SongsPage songsPage = songsPageFactory.getFirstPageByCategory(category);
 
-        PageDto pageDto = getPage(defaultPage.toRequestUrl());
-        defaultPage.updateFromDto(pageDto);
-        return defaultPage;
+        PageDto pageDto = this.getPage(songsPage.toRequestUrl().strip());
+        songsPage.updateFromDto(pageDto);
+        return songsPage;
     }
-    @Cacheable(value = "Songs", key = "#requestUrl")
+
     public PageDto getPage(String requestUrl){
         PageDto pageDto;
 
         try {
-            ResponseEntity<PageDto> response = makeRequestToParserApi(requestUrl);
+            ResponseEntity<PageDto> response = parserApi.makeRequest(requestUrl);
             pageDto = response.getBody();
         } catch (ConnectException e){
             log.error(String.format("Cant process %s request to parser", requestUrl));
@@ -45,13 +43,5 @@ public class ParserApiService {
             pageDto = PageDtoFactory.getEmptyPageDto();
         }
         return pageDto;
-    }
-
-    private ResponseEntity<PageDto> makeRequestToParserApi(String requestUrl) throws ConnectException{
-        RestTemplate restTemplate = new RestTemplate();
-        String parserPath = String.format("http://parser:%s/%s",
-                parserPort, requestUrl);
-
-        return restTemplate.getForEntity(parserPath, PageDto.class);
     }
 }

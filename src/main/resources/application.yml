@@ -12,7 +12,7 @@ cache-cleaner:
 
 parser:
   port: '8050'
+  hostname: 'parser'
   request:
     sort: position
     size: 10
-

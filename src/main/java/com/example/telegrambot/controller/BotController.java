@@ -13,9 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class BotController {
     private final SongsTopicBot songsTopicBot;
 
-    @RequestMapping(
-            value = "/",
-            method = {RequestMethod.GET, RequestMethod.POST})
+    @GetMapping(value = "/")
     public BotApiMethod onUpdateReceived(@RequestBody Update update){
         log.info(String.format("Received update %s", update.toString()));
         return songsTopicBot.onWebhookUpdateReceived(update);

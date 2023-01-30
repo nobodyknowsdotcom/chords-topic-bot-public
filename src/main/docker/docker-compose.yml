@@ -5,7 +5,9 @@ services:
     image: 'nobodyknowsdotcom/bot'
     container_name: bot
     ports:
-      - "8080:8080"
+      - 8080:8080
   parser:
     image: "nobodyknowsdotcom/amdm-parser"
     container_name: parser
+    ports:
+      - 8050:8050
